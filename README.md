@@ -25,5 +25,5 @@ Ledger Service – Docker Compose Setup
         ![Ledger Frontend Create and List invoice Screenshot](./docs/Create-list-invoice.png)
         ![Ledger Frontend Ledger Screenshot](./docs/ledger-screen.png)
 
-## Kubernetes clusetr deployment
+## Kubernetes cluster deployment
     comming soon ...
