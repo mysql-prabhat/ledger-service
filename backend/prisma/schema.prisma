@@ -1,0 +1,67 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://ledger:ledgerpass@localhost:5432/ledgerdb" 
+  //env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id          Int           @id @default(autoincrement())
+  name        String
+  createdAt   DateTime      @default(now())
+
+  // Relation fields
+  debitTransactions  Transaction[] @relation("DebitAccount")
+  creditTransactions Transaction[] @relation("CreditAccount")
+}
+
+model Transaction {
+  id                Int      @id @default(autoincrement())
+  amount_cents      Int
+  timestamp         DateTime @default(now())
+
+  // Relations to Account
+  debit_account_id  Int
+  debitAccount      Account  @relation("DebitAccount", fields: [debit_account_id], references: [id])
+
+  credit_account_id Int
+  creditAccount     Account  @relation("CreditAccount", fields: [credit_account_id], references: [id])
+}
+
+model Invoice {
+  id        Int        @id @default(autoincrement())
+  due_date  DateTime
+  status    String     // draft, sent, paid, overdue
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  line_items LineItem[]
+  payments   Payment[]
+}
+
+model LineItem {
+  id          Int     @id @default(autoincrement())
+  description String
+  amount_cents Int
+  invoice_id  Int
+  invoice     Invoice @relation(fields: [invoice_id], references: [id])
+}
+
+model Payment {
+  id          Int     @id @default(autoincrement())
+  amount_cents Int
+  timestamp   DateTime @default(now())
+  invoice_id  Int
+  invoice     Invoice @relation(fields: [invoice_id], references: [id])
+}
+
