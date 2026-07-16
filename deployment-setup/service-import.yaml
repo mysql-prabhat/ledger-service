@@ -1,0 +1,7 @@
+apiVersion: net.gke.io/v1
+kind: ServiceImport
+metadata:
+  name: ledger-backend
+  namespace: default
+spec:
+  type: ClusterSetIP

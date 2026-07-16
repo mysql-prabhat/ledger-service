@@ -1,0 +1,11 @@
+replicaCount: 2
+
+image:
+  frontend: pkmdocker857/ledger-frontend:latest
+
+service:
+  type: LoadBalancer
+
+frontend:
+  env:
+    API_BASE_URL: "http://ledger-backend.default.svc.clusterset.local:4000"

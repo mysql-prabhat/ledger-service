@@ -1,0 +1,15 @@
+replicaCount: 2
+
+image:
+  backend: pkmdocker857/ledger-backend:latest
+  postgres: postgres:15-alpine
+
+postgres:
+  user: ledger
+  password: ledgerpass
+  db: ledgerdb
+
+jwtSecret: supersecretkey
+
+service:
+  type: ClusterIP

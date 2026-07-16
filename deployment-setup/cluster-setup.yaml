@@ -1,0 +1,28 @@
+# Private cluster for backend + Postgres
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerCluster
+metadata:
+  name: ledger-private
+spec:
+  location: us-central1-a
+  initialNodeCount: 3
+  privateClusterConfig:
+    enablePrivateNodes: true
+    enablePrivateEndpoint: false
+    masterIpv4CidrBlock: 172.16.0.16/28
+  networkingMode: VPC_NATIVE
+  releaseChannel:
+    channel: REGULAR
+
+---
+# Public cluster for React frontend
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerCluster
+metadata:
+  name: ledger-public
+spec:
+  location: us-central1-a
+  initialNodeCount: 2
+  networkingMode: VPC_NATIVE
+  releaseChannel:
+    channel: REGULAR

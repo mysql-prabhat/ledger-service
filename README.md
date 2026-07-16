@@ -26,4 +26,19 @@ Ledger Service – Docker Compose Setup
         ![Ledger Frontend Ledger Screenshot](./docs/ledger-screen.png)
 
 ## Kubernetes cluster deployment
-    comming soon ...
+    Deployment Workflow in Cloud Shell
+        1. Enable APIs:
+            ```# Set your project ID
+                gcloud config set project [YOUR_PROJECT_ID]```
+            ```# Enable required APIs
+                gcloud services enable container.googleapis.com compute.googleapis.com```
+
+        2. Create clusters (if not using Config Connector YAML):
+           ```gcloud container clusters create private-cluster \
+                --zone us-central1-a \
+                --enable-private-nodes \
+                --master-ipv4-cidr 172.16.0.0/28 \
+                --enable-ip-alias \
+                --no-enable-master-authorized-networks```
+
+        3. kubectl apply deployment-setup
